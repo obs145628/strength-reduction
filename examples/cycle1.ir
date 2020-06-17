@@ -1,0 +1,46 @@
+foo:
+.fun int
+
+B0:
+	b @B1
+
+B1:
+	phi %i, @B0, 1, @B3, %i2
+	phi %r, @B0, 0, @B3, %r2
+	cmplt %p1, %r, 0
+	bc %p1, @B2, @B5
+
+B2:
+	mul %t0, %r, 2
+	b @B3
+
+B3:
+	phi %t1, @B2, %t0, @B7, %t6
+	add %y, %t1, 3
+	add %z, %r, %i
+	sub %r2, %y, %z
+	add %i2, %i, 1
+	cmplt %p2, %i2, 100
+	bc %p2, @B1, @B4
+
+B4:
+	mul %res, %r2, 10
+	ret %res
+
+B5:
+	mul %t2, %r, 3
+	cmplt %p3, %i, 50
+	bc %p3, @B6, @B8
+
+B6:
+	add %t3, %t2, 10
+	b @B7
+
+B7:
+	phi %t5, @B6, %t3, @B8, %t4
+	mul %t6, %t5, %i
+	b @B3
+
+B8:
+	sub %t4, %t2, 10
+	b @B7

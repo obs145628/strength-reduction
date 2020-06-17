@@ -20,6 +20,10 @@ impl BasicBlock {
         &self.val
     }
 
+    pub fn id(&self) -> BasicBlockRef {
+        self.val.id().raw().into()
+    }
+
     pub fn val_mut(&mut self) -> &mut Value {
         &mut self.val
     }
@@ -68,6 +72,6 @@ impl BasicBlock {
 
 impl From<&BasicBlock> for BasicBlockRef {
     fn from(x: &BasicBlock) -> Self {
-        x.val.id().raw().into()
+        x.id()
     }
 }

@@ -1,7 +1,9 @@
+use crate::checker;
 use crate::context::Context;
 use crate::gop;
 use crate::isa::ISA;
 use crate::valueref::{BasicBlockRef, FunctionRef, InstructionRef, ValueRef, ValueRefEnum};
+
 use std::collections::HashMap;
 
 struct CodeBuilder {
@@ -176,10 +178,11 @@ impl CodeBuilder {
         let f = arg.chars().next().unwrap();
 
         if f == '%' {
-            *self
-                .vars_map
-                .get(&arg[1..])
-                .expect("Use undefined register value")
+            *self.vars_map.get(&arg[1..]).expect(&format!(
+                "Use undefined register value {} at {:?}",
+                &arg[1..],
+                args
+            ))
         } else if f == '@' {
             let is_fun = opname == "call";
             if is_fun {
@@ -302,6 +305,7 @@ mod tests {
 
         let mut ctx = Context::new();
         load_gop(&mut ctx, &gop::Module::parse(&path));
+        checker::check_code(&ctx);
         let gmod = build_gop(&ctx);
         println!("{}", gmod);
     }
@@ -314,5 +318,10 @@ mod tests {
     #[test]
     fn load_fact_rec() {
         test_file("examples/fact_rec.ir");
+    }
+
+    #[test]
+    fn load_cycle1() {
+        test_file("examples/cycle1.ir");
     }
 }

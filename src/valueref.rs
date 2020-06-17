@@ -9,7 +9,7 @@ use crate::value::Value;
 
 use std::fmt;
 
-#[derive(Clone, Copy, Eq, PartialEq)]
+#[derive(Clone, Copy, Eq, PartialEq, Hash)]
 pub struct RawValueRef(usize);
 
 impl Indexable for RawValueRef {
@@ -53,7 +53,7 @@ pub trait SubValueRef {
     const ID: usize;
 }
 
-#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub struct ValueRef(usize);
 
 impl Indexable for ValueRef {
@@ -88,7 +88,7 @@ impl ValueRef {
     }
 }
 
-#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub struct InstructionRef(usize);
 
 impl Indexable for InstructionRef {
@@ -124,7 +124,7 @@ impl InstructionRef {
     }
 }
 
-#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub struct BasicBlockRef(usize);
 
 impl Indexable for BasicBlockRef {
@@ -160,7 +160,7 @@ impl BasicBlockRef {
     }
 }
 
-#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub struct FunctionRef(usize);
 
 impl Indexable for FunctionRef {
@@ -196,7 +196,7 @@ impl FunctionRef {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub struct ConstantRef(usize);
 
 impl Indexable for ConstantRef {
@@ -232,7 +232,7 @@ impl ConstantRef {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub struct ArgumentRef(usize);
 
 impl Indexable for ArgumentRef {
